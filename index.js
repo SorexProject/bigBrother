@@ -35,8 +35,26 @@ const Options = {
 
 var intervalID = setInterval(alreadyup, 10000);
 
+async function getResource(identifier) {
+    try {
+        Options.method = "get";
+        Options.url = `/api/client/servers/${identifier}/resources`;
+        Options.headers = userHeaders;
+        const result = await axios(Options);
+        // debug mode
+        if (result) {
+            if (debug === true) {
+                console.log(`${aujourdhui} : route ${Options.url} ${result.status}`);
+            }
+        }
+    } catch (error) {
+        console.log(`${aujourdhui} : route ${Options.url} : ${error}`);
+        return;
+    }
+}
 async function alreadyup() {
     try {
+        let body = [];
         Options.method = "get";
         Options.url = `/api/application/servers`;
         Options.headers = serverHeaders;
@@ -50,7 +68,10 @@ async function alreadyup() {
         }
 
         if (result) {
-            return console.log(result.data);
+            for (let data of result.data.data) {
+                body.push(data.attributes);
+                const diskinit = await getResource(data.attributes.identifier);
+            }
         }
     } catch (error) {
         console.log(`${aujourdhui} : route ${Options.url} : ${error}`);
