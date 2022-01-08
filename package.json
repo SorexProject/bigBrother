@@ -1,0 +1,9 @@
+{
+    "name": "bigbrother",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/SorexProject/bigBrother.git",
+    "author": "Williampilote",
+    "license": "none",
+    "private": true
+}
