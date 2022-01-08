@@ -9,49 +9,51 @@ const hostname = process.env.SERVER_PTERODACTYL_URL;
 const tokenUser = process.env.SERVER_PTERODACTYL_TOKENUSER;
 const tokenServer = process.env.SERVER_PTERODACTYL_TOKENSERVER;
 
-server.listen(30001);
+server.listen(process.env.SERVER_PORT);
 
 app.get("/", function(req, res) {
     res.send("Ready");
 });
 
-const serverHeaders = {
+const userHeaders = {
     Accept: "application/json",
     "Content-Type": "application/json",
     Authorization: `Bearer ${tokenUser}`,
 };
+const serverHeaders = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${tokenServer}`,
+};
 
-const serverOptions = {
+const Options = {
     baseURL: hostname,
     port: 443,
     url: "",
     method: "",
-    headers: serverHeaders,
 };
 
-var intervalID = setInterval(alreadyup, 500, "Parameter 1", "Parameter 2");
+var intervalID = setInterval(alreadyup, 10000);
 
-async function alreadyup() {}
-
-app.get(`/api/image/Random`, async(req, res) => {
+async function alreadyup() {
     try {
-        serverOptions.method = "get";
-        serverOptions.url = `/photos/random`;
+        Options.method = "get";
+        Options.url = `/api/application/servers`;
+        Options.headers = serverHeaders;
 
-        const result = await axios(serverOptions);
+        const result = await axios(Options);
+        // debug mode
         if (result) {
             if (debug === true) {
-                console.log(
-                    `${aujourdhui} : route ${serverOptions.url} ${result.status}`
-                );
+                console.log(`${aujourdhui} : route ${Options.url} ${result.status}`);
             }
         }
 
         if (result) {
-            return res.send(result.data);
+            return console.log(result.data);
         }
     } catch (error) {
-        console.log(`${aujourdhui} : route ${serverOptions.url} : ${error}`);
-        return res.send(error);
+        console.log(`${aujourdhui} : route ${Options.url} : ${error}`);
+        return;
     }
-});
+}
