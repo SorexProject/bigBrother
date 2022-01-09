@@ -14,6 +14,9 @@ async function getResource(identifier) {
                 console.log(`${aujourdhui} : route ${Options.url} ${result.status}`);
             }
         }
+        if (result) {
+            return result.data;
+        }
     } catch (error) {
         console.log(`${aujourdhui} : route ${Options.url} : ${error}`);
         return;
