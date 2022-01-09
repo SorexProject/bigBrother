@@ -1,4 +1,4 @@
-// import { getResource } from "./element/getResource.ts";
+import { getResource } from "./element/getResource.js";
 import express from "express";
 const app = express();
 import axios from "axios";
@@ -69,4 +69,4 @@ async function alreadyup() {
         return;
     }
 }
-// export { userHeaders, debug };
+export { Options, userHeaders, debug };
