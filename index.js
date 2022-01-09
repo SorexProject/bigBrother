@@ -61,6 +61,7 @@ async function alreadyup() {
                 body.push(data.attributes);
                 if (data.attributes.egg == 15) {
                     const resource = await getResource(data.attributes.identifier);
+                    console.log(resource);
                 }
             }
         }
