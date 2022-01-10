@@ -4,10 +4,10 @@ dotenv.config();
 
 
 const mysqld = mysql.createConnection({
-    host: "192.168.1.201",
-    user: "big",
-    password: "P6WOqeBaB8RERIt5m621sE5aR2VuD2",
-    database: "big",
+    host: process.env.SERVER_MYSQL_HOST,
+    user: process.env.SERVER_MYSQL_USER,
+    password: process.env.SERVER_MYSQL_PWD,
+    database: process.env.SERVER_MYSQL_DATABASE,
 });
 
 mysqld.connect(function(err) {
