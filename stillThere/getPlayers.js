@@ -1,10 +1,11 @@
 import { Options, userHeaders, debug } from "../index.js";
 import axios from "axios";
 
-let aujourdhui = new Date();
 
 async function getPlayers(identifier) {
     try {
+        let aujourdhui = new Date();
+
         Options.method = "get";
         Options.url = `/api/client/servers/${identifier}/players`;
         Options.headers = userHeaders;
