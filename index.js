@@ -1,4 +1,4 @@
-import { getResource } from "./element/getPlayers.js";
+import { getPlayers } from "./element/getPlayers.js";
 import express from "express";
 const app = express();
 import axios from "axios";
@@ -6,10 +6,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import http from "http";
 import mysql from "mysql";
-import {
-    TypescriptJSON,
-    Types
-} from 'typescript-json'
 
 
 const debug = true;
@@ -67,9 +63,9 @@ mysqld.query(
     }
 );
 
-var intervalID = setInterval(alreadyup, 10000);
+var intervalID = setInterval(stillThere, 10000);
 
-async function alreadyup() {
+async function stillThere() {
     try {
         let body = [];
         Options.method = "get";
@@ -88,8 +84,8 @@ async function alreadyup() {
             for (let data of result.data.data) {
                 body.push(data.attributes);
                 if (data.attributes.egg == 15 && data.attributes.suspended == false && data.attributes.container.installed == 1) {
-                    const resource = await getResource(data.attributes.identifier);
-                    if (resource.data.onlinePlayers == 0 && resource.data.show == 1) {
+                    const players = await getPlayers(data.attributes.identifier);
+                    if (players.data.onlinePlayers == 0 && players.data.show == 1) {
                         mysqld.query(
                             `SELECT identifier FROM identifier WHERE EXISTS (SELECT identifier FROM identifier WHERE identifier = "${data.attributes.identifier}");`,
                             function(error, results, fields) {
@@ -101,7 +97,7 @@ async function alreadyup() {
                                             if (error) throw error;
                                         }
                                     );
-                                } else if (resource.data.onlinePlayers == 0) {
+                                } else if (players.data.onlinePlayers == 0) {
                                     mysqld.query(
                                         `SELECT * FROM identifier WHERE identifier="${data.attributes.identifier}"`,
                                         function(error, results, fields) {
