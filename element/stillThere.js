@@ -1,4 +1,6 @@
 import { Options, serverHeaders, debug } from "../index.js";
+import { getPlayers } from "./getPlayers.js";
+import { mysqld } from "./mysql.js";
 import axios from "axios";
 
 let aujourdhui = new Date();
