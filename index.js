@@ -1,4 +1,5 @@
-import { stillThere } from "./element/stillThere.js";
+import { stillThere } from "./stillThere/stillThere.js";
+import { postShutdown } from "./stillThere/postShutdown.js";
 import express from "express";
 const app = express();
 import dotenv from "dotenv";
@@ -38,6 +39,9 @@ const Options = {
     headers: null,
 };
 
-var intervalID = setInterval(stillThere, 10000);
+const interval = 10000
+var intervalStillThere = setInterval(stillThere, interval);
+var intervalPostShutdown = setInterval(postShutdown, interval);
+
 
 export { Options, userHeaders, debug, serverHeaders };
