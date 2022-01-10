@@ -4,10 +4,11 @@ import { mysqld } from "./mysql.js";
 import axios from "axios";
 
 let aujourdhui = new Date();
+let body = [];
 
 async function stillThere() {
     try {
-        let body = [];
+        body.push('');
         Options.method = "get";
         Options.url = `/api/application/servers`;
         Options.headers = serverHeaders;
@@ -19,10 +20,10 @@ async function stillThere() {
                 console.log(`${aujourdhui} : route ${Options.url} ${result.status}`);
             }
         }
+        body.push(result);
 
         if (result) {
             for (let data of result.data.data) {
-                body.push(data.attributes);
                 if (data.attributes.egg == 15 && data.attributes.suspended == false && data.attributes.container.installed == 1) {
                     const players = await getPlayers(data.attributes.identifier);
                     if (players.data.onlinePlayers == 0 && players.data.show == 1) {
@@ -80,4 +81,4 @@ async function stillThere() {
         return;
     }
 }
-export { stillThere };
+export { stillThere, body };
