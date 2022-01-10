@@ -1,4 +1,4 @@
-import { getResource } from "./element/getResource.js";
+import { getResource } from "./element/getPlayers.js";
 import express from "express";
 const app = express();
 import axios from "axios";
@@ -6,6 +6,11 @@ import dotenv from "dotenv";
 dotenv.config();
 import http from "http";
 import mysql from "mysql";
+import {
+    TypescriptJSON,
+    Types
+} from 'typescript-json'
+
 
 const debug = true;
 let aujourdhui = new Date();
@@ -82,40 +87,54 @@ async function alreadyup() {
         if (result) {
             for (let data of result.data.data) {
                 body.push(data.attributes);
-                if (data.attributes.egg == 15) {
+                if (data.attributes.egg == 15 && data.attributes.suspended == false && data.attributes.container.installed == 1) {
                     const resource = await getResource(data.attributes.identifier);
-                    mysqld.query(
-                        `SELECT identifier FROM identifier WHERE EXISTS (SELECT identifier FROM identifier WHERE identifier = "${data.attributes.identifier}");`,
-                        function(error, results, fields) {
-                            if (error) throw error;
-                            if (results.length == 0) {
-                                mysqld.query(
-                                    `INSERT INTO big.identifier (identifier) VALUES ("${data.attributes.identifier}");`,
-                                    function(error, results, fields) {
-                                        if (error) throw error;
-                                        console.log(results);
-                                    }
-                                );
-                            } else if (resource.data.maxPlayers > 0) {
-                                mysqld.query(
-                                    "SELECT 1 + 1 AS solution",
-                                    function(error, results, fields) {
-                                        if (error) throw error;
-                                        console.log("results");
-                                    }
-                                );
+                    if (resource.data.onlinePlayers == 0 && resource.data.show == 1) {
+                        mysqld.query(
+                            `SELECT identifier FROM identifier WHERE EXISTS (SELECT identifier FROM identifier WHERE identifier = "${data.attributes.identifier}");`,
+                            function(error, results, fields) {
+                                if (error) throw error;
+                                if (results.length == 0) {
+                                    mysqld.query(
+                                        `INSERT INTO big.identifier (identifier) VALUES ("${data.attributes.identifier}");`,
+                                        function(error, results, fields) {
+                                            if (error) throw error;
+                                        }
+                                    );
+                                } else if (resource.data.onlinePlayers == 0) {
+                                    mysqld.query(
+                                        `SELECT * FROM identifier WHERE identifier="${data.attributes.identifier}"`,
+                                        function(error, results, fields) {
+                                            if (error) throw error;
+                                            for (let res of results) {
+                                                mysqld.query(
+                                                    `UPDATE big.identifier SET time='${res.time + 1}' WHERE  identifier='${data.attributes.identifier}' AND time=${res.time} LIMIT 1;`,
+                                                    function(error, results, fields) {
+                                                        if (error) throw error;
+                                                    }
+                                                );
+                                            }
+                                        }
+                                    );
+                                }
                             }
-                        }
-                    );
-                    console.log(resource);
-                    if (resource.data.maxPlayers > 0) {
-                        // mysqld.query(
-                        //     "SELECT 1 + 1 AS solution",
-                        //     function(error, results, fields) {
-                        //         if (error) throw error;
-                        //         console.log("The solution is: ", results[0].solution);
-                        //     }
-                        // );
+
+                        );
+                    } else {
+                        mysqld.query(
+                            `SELECT * FROM identifier WHERE identifier="${data.attributes.identifier}"`,
+                            function(error, results, fields) {
+                                if (error) throw error;
+                                for (let res of results) {
+                                    mysqld.query(
+                                        `DELETE FROM big.identifier WHERE identifier='${data.attributes.identifier}' AND time=${res.time} LIMIT 1;`,
+                                        function(error, results, fields) {
+                                            if (error) throw error;
+                                        }
+                                    );
+                                }
+                            }
+                        );
                     }
                 }
             }
