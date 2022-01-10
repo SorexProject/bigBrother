@@ -2,6 +2,7 @@ import { Options, userHeaders, debug } from "../index.js";
 import axios from "axios";
 
 let aujourdhui = new Date();
+
 async function getPlayers(identifier) {
     try {
         Options.method = "get";
