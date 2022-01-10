@@ -1,14 +1,14 @@
 import { Options, serverHeaders, debug } from "../index.js";
+import { postShutdown } from "./postShutdown.js";
 import { getPlayers } from "./getPlayers.js";
 import { mysqld } from "./mysql.js";
 import axios from "axios";
 
-let aujourdhui = new Date();
-let body = [];
 
 async function stillThere() {
     try {
-        body.push('');
+        let aujourdhui = new Date();
+
         Options.method = "get";
         Options.url = `/api/application/servers`;
         Options.headers = serverHeaders;
@@ -20,7 +20,6 @@ async function stillThere() {
                 console.log(`${aujourdhui} : route ${Options.url} ${result.status}`);
             }
         }
-        body.push(result);
 
         if (result) {
             for (let data of result.data.data) {
@@ -50,7 +49,9 @@ async function stillThere() {
                                                         if (error) throw error;
                                                     }
                                                 );
+
                                             }
+                                            const players = postShutdown(data.attributes.identifier);
                                         }
                                     );
                                 }
@@ -81,4 +82,4 @@ async function stillThere() {
         return;
     }
 }
-export { stillThere, body };
+export { stillThere };
