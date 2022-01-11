@@ -1,5 +1,5 @@
-import { power } from "./power.js";
-import { mysqld } from "./mysql.js";
+import { power } from "../pterodactyl/power.js";
+import { mysqld } from "../database/mysql.js";
 
 async function postShutdown(identifier) {
     try {
