@@ -77,6 +77,7 @@ async function stillThere() {
                 }
             }
         }
+        return;
     } catch (error) {
         console.log(`${aujourdhui} : route ${Options.url} : ${error}`);
         return;
