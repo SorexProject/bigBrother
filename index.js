@@ -6,7 +6,6 @@ dotenv.config();
 import http from "http";
 
 const debug = true;
-let aujourdhui = new Date();
 const hostname = process.env.SERVER_PTERODACTYL_URL;
 const tokenUser = process.env.SERVER_PTERODACTYL_TOKENUSER;
 const tokenServer = process.env.SERVER_PTERODACTYL_TOKENSERVER;
