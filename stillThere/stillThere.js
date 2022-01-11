@@ -1,7 +1,7 @@
 import { Options, serverHeaders, debug } from "../index.js";
 import { postShutdown } from "./postShutdown.js";
-import { getPlayers } from "./getPlayers.js";
-import { mysqld } from "./mysql.js";
+import { getPlayers } from "../pterodactyl/getPlayers.js";
+import { mysqld } from "../database/mysql.js";
 import axios from "axios";
 
 
