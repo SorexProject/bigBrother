@@ -8,7 +8,7 @@ async function postShutdown(identifier) {
             function(error, results, fields) {
                 if (error) throw error;
                 for (let res of results) {
-                    if (res.time > 180) {
+                    if (res.time > 90) {
                         const players = power(identifier, "kill");
                         return
                     }
