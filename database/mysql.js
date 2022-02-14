@@ -1,5 +1,6 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
+import chalk from "chalk";
 dotenv.config();
 
 
@@ -16,14 +17,14 @@ mysqld.connect(function(err) {
         return;
     }
 
-    console.log("connected as id " + mysqld.threadId);
+    console.log(chalk.green("connected as id " + chalk.bold(mysqld.threadId)));
 });
-
+// init table
 mysqld.query(
     "CREATE TABLE IF NOT EXISTS `identifier` (`identifier` TEXT NOT NULL,`time` decimal(30,0) NOT NULL DEFAULT 0) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
     function(error, results, fields) {
         if (error) throw error;
-        console.log("Database init");
+        console.log(chalk.green(chalk.bold("Database init")));
     }
 );
 export { mysqld }

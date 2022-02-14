@@ -3,8 +3,6 @@ import axios from "axios";
 
 async function power(identifier, signal) {
     try {
-        console.log(`${identifier} KILLED`)
-
         Options.method = "post";
         Options.url = `/api/client/servers/${identifier}/power`;
         Options.headers = userHeaders;
@@ -13,7 +11,9 @@ async function power(identifier, signal) {
         }
 
         const result = await axios(Options);
-        return
-    } catch (error) {}
+        return true
+    } catch (error) {
+        return false
+    }
 }
 export { power };
