@@ -11,9 +11,9 @@ const power = async(identifier, signal) => {
         }
 
         const result = await axios(Options);
-        return true
-    } catch (error) {
-        return false
+        return result.data
+    } catch (e) {
+        console.error(e);
     }
 }
 

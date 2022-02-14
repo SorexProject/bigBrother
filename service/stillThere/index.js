@@ -1,4 +1,4 @@
-import listServers from "../../request/pterodactyl/server/listServers.js";
+import getServers from "../../request/pterodactyl/server/getServers.js";
 import postShutdown from "./postShutdown.js";
 import uptimeIdentifier from "./uptimeIdentifier.js";
 import initIdentifier from "./initIdentifier.js";
@@ -7,11 +7,12 @@ import getPlayers from "../../request/pterodactyl/user/getPlayers.js";
 
 const stillThere = async() => {
     try {
-        const result = await listServers();
+        const result = await getServers();
         if (result) {
-            for (let data of result.data.data) {
+            for (let data of result.data) {
                 if (data.attributes.egg == 15 && data.attributes.suspended == false && data.attributes.container.installed == 1) {
                     const players = await getPlayers(data.attributes.identifier);
+
                     if (players.data.onlinePlayers == 0 && players.data.show == 1) {
                         await initIdentifier(data)
                         if (players.data.onlinePlayers == 0) {
@@ -24,9 +25,8 @@ const stillThere = async() => {
                 }
             }
         }
-        return;
-    } catch (error) {
-        return;
+    } catch (e) {
+        console.error(e)
     }
 }
 

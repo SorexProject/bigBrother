@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import chalk from "chalk";
 dotenv.config();
 
-
 const mysqld = mysql.createConnection({
     host: process.env.SERVER_MYSQL_HOST,
     user: process.env.SERVER_MYSQL_USER,
@@ -27,4 +26,5 @@ mysqld.query(
         console.log(chalk.green(chalk.bold("Database init")));
     }
 );
+
 export default mysqld

@@ -20,6 +20,8 @@ const postShutdown = async(data) => {
             }
         );
         return
-    } catch (e) {}
+    } catch (e) {
+        console.error(e)
+    }
 }
 export default postShutdown;

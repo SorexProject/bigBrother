@@ -19,7 +19,7 @@ const deleteIdentifier = async(data) => {
             }
         );
     } catch (e) {
-
+        console.error(e)
     }
 }
 

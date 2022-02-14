@@ -19,7 +19,7 @@ const initIdentifier = async(data) => {
             }
         );
     } catch (e) {
-
+        console.error(e)
     }
 }
 

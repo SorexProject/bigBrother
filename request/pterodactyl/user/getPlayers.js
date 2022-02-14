@@ -7,11 +7,10 @@ const getPlayers = async(identifier) => {
         Options.url = `/api/client/servers/${identifier}/players`;
         Options.headers = userHeaders;
         const result = await axios(Options);
-        if (result) {
-            return result.data;
-        }
+        return result.data;
     } catch (e) {
-        return;
+        console.error(e);
     }
 }
+
 export default getPlayers;
