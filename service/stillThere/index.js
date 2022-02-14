@@ -1,18 +1,13 @@
-import { Options, serverHeaders } from "../../request/pterodactyl/index.js";
+import listServers from "../../request/pterodactyl/server/listServers.js";
 import postShutdown from "./postShutdown.js";
 import uptimeIdentifier from "./uptimeIdentifier.js";
 import initIdentifier from "./initIdentifier.js";
 import deleteIdentifier from "./deleteIdentifier.js";
-import { getPlayers } from "../../request/pterodactyl/user/getPlayers.js";
-import axios from "axios";
-
+import getPlayers from "../../request/pterodactyl/user/getPlayers.js";
 
 const stillThere = async() => {
     try {
-        Options.method = "get";
-        Options.url = `/api/application/servers`;
-        Options.headers = serverHeaders;
-        const result = await axios(Options);
+        const result = await listServers();
         if (result) {
             for (let data of result.data.data) {
                 if (data.attributes.egg == 15 && data.attributes.suspended == false && data.attributes.container.installed == 1) {

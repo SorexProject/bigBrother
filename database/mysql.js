@@ -27,4 +27,4 @@ mysqld.query(
         console.log(chalk.green(chalk.bold("Database init")));
     }
 );
-export { mysqld }
+export default mysqld

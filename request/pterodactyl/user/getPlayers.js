@@ -10,9 +10,8 @@ const getPlayers = async(identifier) => {
         if (result) {
             return result.data;
         }
-    } catch (error) {
-        console.log(`${aujourdhui} : route ${Options.url} : ${error}`);
+    } catch (e) {
         return;
     }
 }
-export { getPlayers };
+export default getPlayers;

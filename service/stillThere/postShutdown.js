@@ -1,5 +1,5 @@
-import { power } from "../../request/pterodactyl/user/power.js";
-import { mysqld } from "../../database/mysql.js";
+import power from "../../request/pterodactyl/user/power.js";
+import mysqld from "../../database/mysql.js";
 import deleteIdentifier from "./deleteIdentifier.js";
 import chalk from "chalk";
 

@@ -1,7 +1,7 @@
 import { Options, userHeaders } from "../index.js";
 import axios from "axios";
 
-const power = async(identifier, signal) => {
+const serverBuild = async(identifier, signal) => {
     try {
         Options.method = "post";
         Options.url = `/api/client/servers/${identifier}/power`;
@@ -17,4 +17,4 @@ const power = async(identifier, signal) => {
     }
 }
 
-export default power;
+export default serverBuild;

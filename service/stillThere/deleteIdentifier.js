@@ -1,4 +1,4 @@
-import { mysqld } from "../../database/mysql.js";
+import mysqld from "../../database/mysql.js";
 import chalk from "chalk";
 
 const deleteIdentifier = async(data) => {
