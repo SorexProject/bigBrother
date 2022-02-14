@@ -22,7 +22,7 @@ const stillThere = async() => {
                         if (players.data.onlinePlayers == 0) {
                             await uptimeIdentifier(data)
                         }
-                        await postShutdown(data.attributes.identifier);
+                        await postShutdown(data);
                     } else {
                         await deleteIdentifier(data)
                     }
