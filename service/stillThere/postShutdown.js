@@ -2,7 +2,7 @@ import { power } from "../../request/pterodactyl/user/power.js";
 import { mysqld } from "../../database/mysql.js";
 import chalk from "chalk";
 
-async function postShutdown(identifier) {
+const postShutdown = (identifier) => {
     try {
         mysqld.query(
             `SELECT * FROM identifier WHERE identifier="${identifier}"`,

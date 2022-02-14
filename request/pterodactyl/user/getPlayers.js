@@ -1,8 +1,7 @@
 import { Options, userHeaders } from "../index.js";
 import axios from "axios";
 
-
-async function getPlayers(identifier) {
+const getPlayers = async(identifier) => {
     try {
         Options.method = "get";
         Options.url = `/api/client/servers/${identifier}/players`;

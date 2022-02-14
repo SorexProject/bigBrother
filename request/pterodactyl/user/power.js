@@ -1,7 +1,7 @@
 import { Options, userHeaders } from "../index.js";
 import axios from "axios";
 
-async function power(identifier, signal) {
+const power = async(identifier, signal) => {
     try {
         Options.method = "post";
         Options.url = `/api/client/servers/${identifier}/power`;

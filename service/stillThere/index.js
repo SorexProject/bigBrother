@@ -7,7 +7,7 @@ import { getPlayers } from "../../request/pterodactyl/user/getPlayers.js";
 import axios from "axios";
 
 
-async function stillThere() {
+const stillThere = async() => {
     try {
         Options.method = "get";
         Options.url = `/api/application/servers`;
@@ -34,4 +34,5 @@ async function stillThere() {
         return;
     }
 }
+
 export default stillThere;
