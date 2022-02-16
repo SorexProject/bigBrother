@@ -7,9 +7,9 @@ const setCpu = async() => {
     try {
         const result = await getServers();
         if (result) {
-            let thread = 1;
-            if (thread > 55) {
-                let thread = 1;
+            let thread = 55;
+            if (thread <= 1) {
+                thread = 55;
             }
             for (let data of result.data) {
                 if (
@@ -26,6 +26,7 @@ const setCpu = async() => {
                             let parms = {
                                 limits: {
                                     io: 500,
+                                    cpu: 100,
                                 },
                                 feature_limits: {
                                     databases: 0,
@@ -34,12 +35,13 @@ const setCpu = async() => {
                                 },
                             };
                             await serverBuild(data.attributes.id, thread, data, parms);
-                            thread = thread + 1;
+                            thread = thread - 1;
                         }
                         if (data.attributes.egg == 19) {
                             let parms = {
                                 limits: {
                                     io: 1000,
+                                    cpu: 200,
                                 },
                                 feature_limits: {
                                     databases: 0,
@@ -47,8 +49,9 @@ const setCpu = async() => {
                                     backups: 2,
                                 },
                             };
-                            await serverBuild(data.attributes.id, thread, data, parms);
-                            thread = thread + 1;
+                            let threadPremium = `${thread - 1},${thread}`;
+                            await serverBuild(data.attributes.id, threadPremium, data, parms);
+                            thread = thread - 2;
                         }
                     }
                 }

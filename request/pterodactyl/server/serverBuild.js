@@ -13,7 +13,7 @@ const serverBuild = async(identifier, threads, data, parms) => {
             disk: parms.limits.disk || data.attributes.limits.disk,
             io: parms.limits.io || data.attributes.limits.io,
             cpu: parms.limits.cpu || data.attributes.limits.cpu,
-            threads: threads || null,
+            threads: `${threads}` || null,
             feature_limits: {
                 databases: parms.feature_limits.databases,
                 allocations: parms.feature_limits.allocations,
